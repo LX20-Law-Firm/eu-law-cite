@@ -1,0 +1,5 @@
+{
+  "url": "https://publications.europa.eu/webapi/rdf/sparql?query=PREFIX+cdm%3A+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fontology%2Fcdm%23%3E%0ASELECT+DISTINCT+%3Fcelex+%3Ftitle+%3Fdate+%3Flanguage+WHERE+%7B%0A%3Fw+cdm%3Acase-law_ecli+%3Fidentifier+.+FILTER%28STR%28%3Fidentifier%29%3D%22ECLI%3AEU%3AC%3A2020%3A559%22%29%0AOPTIONAL+%7B+%3Fw+cdm%3Aresource_legal_id_celex+%3Fcelex+%7D%0AOPTIONAL+%7B+%3Fw+cdm%3Awork_date_document+%3Fdate+%7D%0AOPTIONAL+%7B+%3Fe+cdm%3Aexpression_belongs_to_work+%3Fw+%3B+cdm%3Aexpression_title+%3Ftitle+%3B+cdm%3Aexpression_uses_language+%3Flanguage+.%0AFILTER%28%3Flanguage%3D%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Flanguage%2FENG%3E%29+%7D%0A%7D+ORDER+BY+STRLEN%28STR%28%3Fcelex%29%29+%3Fcelex+%3Ftitle+LIMIT+20&format=application%2Fsparql-results%2Bjson",
+  "accessed": "2026-11-15",
+  "description": "Recorded public bibliographic SPARQL response; no legal full text"
+}

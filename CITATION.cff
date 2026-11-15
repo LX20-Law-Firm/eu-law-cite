@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "Please cite this repository when using it."
+title: "eu-law-cite"
+version: 0.1.0
+date-released: 2026-11-15
+authors:
+  - name: LX20 Law Firm
+license: Apache-2.0
+repository-code: "https://github.com/lx20lawfirm/eu-law-cite"

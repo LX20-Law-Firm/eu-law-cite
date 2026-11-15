@@ -1,0 +1,16 @@
+{
+  "title": "eu-law-cite",
+  "description": "Bibliographic research materials and tools by LX20 Law Firm. Code: Apache-2.0; original data: CC BY 4.0.",
+  "creators": [
+    {
+      "name": "LX20 Law Firm"
+    }
+  ],
+  "license": "Apache-2.0",
+  "upload_type": "software",
+  "version": "0.1.0",
+  "keywords": [
+    "legal citation",
+    "bibliography"
+  ]
+}

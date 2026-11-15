@@ -1,0 +1,20 @@
+[tool.ruff]
+line-length = 100
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "eu-law-cite"
+version = "0.1.0"
+description = "Bibliographic identifiers and citation checks for EU legal research"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{name = "LX20 Law Firm", email = "noreply@lx20lawfirm.com"}]
+dependencies = ["markdown-it-py>=3,<5"]
+[project.scripts]
+eu-law-cite = "eu_law_cite.__main__:main"
+[tool.setuptools.packages.find]
+include = ["eu_law_cite*"]

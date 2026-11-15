@@ -1,0 +1,34 @@
+name: EU citation check
+description: Check Markdown citations against public bibliographic metadata
+author: LX20 Law Firm
+inputs:
+  paths:
+    description: Newline-separated Markdown paths, without shell expansion
+    required: true
+  language:
+    description: Two-letter EU language code
+    default: en
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: python -m pip install "$ACTION_PATH"
+    - shell: bash
+      env:
+        CITATION_PATHS: ${{ inputs.paths }}
+        CITATION_LANGUAGE: ${{ inputs.language }}
+      run: |
+        python - <<'PY'
+        import os
+        import subprocess
+        import sys
+        paths = [p.strip() for p in os.environ['CITATION_PATHS'].splitlines() if p.strip()]
+        if not paths:
+            sys.exit('At least one Markdown path is required')
+        sys.exit(subprocess.call([sys.executable, '-m', 'eu_law_cite', '--language', os.environ['CITATION_LANGUAGE'], 'check', '--', *paths]))
+        PY

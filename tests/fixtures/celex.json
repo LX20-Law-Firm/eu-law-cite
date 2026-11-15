@@ -1,0 +1,4 @@
+
+{ "head": { "link": [], "vars": ["celex", "title", "date", "language"] },
+  "results": { "distinct": false, "ordered": true, "bindings": [
+    { "celex": { "type": "literal", "datatype": "http://www.w3.org/2001/XMLSchema#string", "value": "32016R0679" }	, "title": { "type": "literal", "value": "Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation) (Text with EEA relevance)" }	, "date": { "type": "literal", "datatype": "http://www.w3.org/2001/XMLSchema#date", "value": "2016-04-27" }	, "language": { "type": "uri", "value": "http://publications.europa.eu/resource/authority/language/ENG" }} ] } }
