@@ -17,7 +17,7 @@ LANGUAGES = {"en": "ENG", "it": "ITA", "fr": "FRA", "de": "DEU", "es": "SPA",
              "cs": "CES", "da": "DAN", "et": "EST", "fi": "FIN", "ga": "GLE",
              "hr": "HRV", "hu": "HUN", "lt": "LIT", "lv": "LAV", "mt": "MLT",
              "ro": "RON", "sk": "SLK", "sl": "SLV", "sv": "SWE"}
-CELEX = re.compile(r"[0-9CE][0-9]{4}[A-Z]{1,2}[0-9]{3,4}(?:\([0-9]{2}\))?(?:-[0-9]{8})?|[1256][0-9]{4}[A-Z]{1,2}/[A-Z0-9_]+")
+CELEX = re.compile(r"[0-9CE][0-9]{4}[A-Z]{1,2}[0-9]{3,4}(?:\([0-9]{2}\))?(?:-[0-9]{8})?(?:_RES|_[0-9]+)?|[1256][0-9]{4}[A-Z]{1,2}/[A-Z0-9_]+")
 ECLI = re.compile(r"ECLI:[A-Z]{2}:[A-Z0-9.]{1,7}:[0-9]{4}:[A-Z0-9.]{1,25}")
 ELI = re.compile(r"https?://(?:data\.europa\.eu|eur-lex\.europa\.eu)/eli/[A-Za-z0-9_./-]+")
 
@@ -41,9 +41,16 @@ class Identifier:
                 raise CitationError("unsupported", "Only EU court ECLI metadata is available")
         elif ELI.fullmatch(value):
             path = urlparse(value).path.rstrip("/")
-            path = re.sub(r"/(?:eng|ita|fra|deu|spa)(?:/(?:html|pdf))?$", "", path)
+            suffixes = "|".join(code.lower() for code in LANGUAGES.values())
+            path = re.sub(r"/(?:" + suffixes + r")(?:/(?:html|pdf))?$", "", path)
             if not path.endswith("/oj"):
                 raise CitationError("unsupported", "ELI must identify an EU Official Journal work ending /oj")
+            if ".." in path or "//" in path:
+                raise CitationError("malformed", "Invalid ELI path")
+            act = r"/eli/(?:reg|dir|dec|reco|opin)(?:_del|_impl)?/[0-9]{4}/[0-9]+/oj"
+            treaty = r"/eli/treaty/[a-z]+_[0-9]{4}(?:/art_[0-9]+)?/oj"
+            if not re.fullmatch(act + "|" + treaty, path):
+                raise CitationError("malformed", "Unsupported or malformed EU ELI work path")
             self.kind, self.value = "eli", "http://data.europa.eu" + path
         else:
             raise CitationError("malformed", f"Malformed or unsupported identifier: {value}")

@@ -109,3 +109,23 @@ class CitationTests(unittest.TestCase):
                 with self.assertRaises(CitationError) as error:
                     fetch('https://example.org')
                 self.assertEqual(error.exception.kind, kind)
+
+    def test_eli_paths_and_celex_suffix(self):
+        self.assertEqual(Identifier('62018CJ0311_RES').kind, 'celex')
+        self.assertEqual(Identifier('https://eur-lex.europa.eu/eli/reg/2016/679/oj/pol/pdf').value, 'http://data.europa.eu/eli/reg/2016/679/oj')
+        for value in ['https://data.europa.eu/eli/reg/banana/oj', 'https://data.europa.eu/eli/../reg/2016/679/oj']:
+            with self.subTest(value=value), self.assertRaises(CitationError):
+                Identifier(value)
+
+    def test_cli_offline_and_exit_status(self):
+        import subprocess
+        import sys
+        self.client().resolve('32016R0679')
+        prefix = [sys.executable, '-m', 'eu_law_cite', '--cache', str(self.cache), '--offline']
+        result = subprocess.run([*prefix, 'cite', '32016R0679'], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(json.loads(result.stdout)[0]['language'], 'en')
+        result = subprocess.run([*prefix, 'cite', 'CELEX:broken'], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 1)
+        result = subprocess.run([*prefix, 'cite', '39999R9999'], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 2)
