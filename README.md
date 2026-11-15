@@ -27,7 +27,7 @@ Exit codes: 0 verified with no findings; 1 malformed/missing citations or broken
 
 ## GitHub Action
 
-After publishing a reviewed release, pin its commit in the calling workflow. Example syntax (the v0.1.0 tag must be created when publishing):
+Use the released version in a workflow:
 
 ```yaml
 - uses: actions/checkout@v4
