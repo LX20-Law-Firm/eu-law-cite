@@ -31,7 +31,7 @@ After publishing a reviewed release, pin its commit in the calling workflow. Exa
 
 ```yaml
 - uses: actions/checkout@v4
-- uses: lx20lawfirm/eu-law-cite@v0.1.0
+- uses: LX20-Law-Firm/eu-law-cite@v0.1.0
   with:
     paths: |
       README.md
